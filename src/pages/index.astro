@@ -1,0 +1,34 @@
+---
+import { getCollection } from "astro:content";
+import ReactList from "../components/ReactList";
+
+const products = await getCollection(
+  "products",
+  ({ data }: { data: { in_stock: boolean } }) => data.in_stock
+);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Dynamic Endpoints</title>
+  </head>
+  <body class="p-6 grid gap-6">
+    <h1 class="text-3xl font-bold text-blue-500">Products</h1>
+    <ReactList client:only="react" />
+    <!-- {
+      products.map(({ data }) => (
+        <ul class="p-4 rounded-md border-2 max-w-fit">
+          <li>
+            <strong>{data.product_name}</strong>
+          </li>
+          <li>{data.price}</li>
+          <li>In Stock: {data.in_stock}</li>
+        </ul>
+      ))
+    } -->
+  </body>
+</html>
